@@ -1,0 +1,22 @@
+{
+	"name": "pingpw/micro_bstag",
+	"description": "the Pingpw Framework",
+	"license": "MIT",
+	"require": {
+		"php-amqplib/php-amqplib": "dev-master",
+		"PHPOffice/PHPExcel": "dev-master",
+		"elasticsearch/elasticsearch": "v2.0.0",
+		"jaeger/querylist": "^3.1",
+		"jaeger/querylist-ext-request": "^1.0",
+		"jaeger/querylist-ext-multi": "^1.0",
+		"jaeger/querylist-ext-login": "^1.0",
+		"predis/predis": "^1.0",
+		"nategood/httpful": "dev-master"
+	},
+	"repositories": {
+		"packagist": {
+			"type": "composer",
+			"url": "https://packagist.phpcomposer.com"
+		}
+	}
+}
