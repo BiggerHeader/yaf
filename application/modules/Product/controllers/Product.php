@@ -33,11 +33,19 @@ class ProductController extends Yaf_Controller_Abstract
             $pagesize = $this->getRequest()->getQuery('pageSize');
             $limit = getPageLimit(['page' => $page, 'pageSize' => $pagesize]);
 
-            $result_data['count'] = TZ_Loader::service('Product', 'Product')->count();
+            $count = TZ_Loader::service('Product', 'Product')->count();
             $where['LIMIT'] = $limit;
-            $result_data['list'] = TZ_Loader::service('Product', 'Product')->select('*', $where);
-            TZ_Response::success('查询成功', $result_data);
+            $data = TZ_Loader::service('Product', 'Product')->select('*', $where);
+
+            header("Content-type:application/json;charset=utf-8");
+            exit(json_encode([
+                'code' => 10000,
+                'msg' => '查询成功',
+                'data' => $data,
+                'count' => $count,
+            ]));
         }
+
         TZ_Response::error(10001, '请求类型错误');
     }
 
