@@ -28,6 +28,24 @@ class TZ_Response
         self::sendJson($response);
     }
 
+
+    static public function success_list($msg = null, $data = array(), $code = 10000)
+    {
+        $response = array(
+            'code' => $code,
+            'msg' => $msg
+        );
+
+        if (! empty($data)) {
+            $response=  array_merge($response,$data);
+        }
+
+        // send
+        self::sendJson($response);
+    }
+
+
+
     /**
      * 请求错误
      *

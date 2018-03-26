@@ -64,4 +64,50 @@ class CommentController extends Yaf_Controller_Abstract
         }
         TZ_Response::error(10001, '请求类型错误');
     }
+
+    /**
+     *意见反馈
+     */
+    public function feedbackAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            // 获取请求体数据
+            $body = getRequestBody();
+            // 参数必传校验
+            if (empty($body['content'])) {
+                TZ_Response::error(10005, '内容不能为空');
+            }
+            $data = [];
+
+            if (!empty($body['name'])) {
+                $data['name'] = $body['name'];
+            } else {
+                TZ_Response::error(10004, '名字不能为空');
+            }
+
+            if (!empty($body['email']) && filter_var($body['email'], FILTER_VALIDATE_EMAIL)) {
+                $data['email'] = $body['email'];
+            } else {
+                TZ_Response::error(10003, '邮箱格式不正确或邮箱不能为空');
+            }
+            $data['content'] = $body['content'];
+            $data['create_time'] = $data['update_time'] = date('Y-m-d H:i:s');
+
+            TZ_Loader::service('Comment', 'Comment')->insert_feedback($data);
+            TZ_Response::success('提交成功！');
+        }
+        TZ_Response::error(10001, '请求类型错误');
+    }
+
+    /**
+     *后台查看数据
+     */
+    public function getfeedbackAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            TZ_Loader::service('Comment', 'Comment')->get_feedback();
+
+        }
+        TZ_Response::error(10001, '请求类型错误');
+    }
 }

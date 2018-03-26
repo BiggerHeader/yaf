@@ -25,4 +25,12 @@ class CommentService
     {
         return CommentModel::countData($where);
     }
+
+    /**
+     *保存 反馈数据
+     */
+    public function insert_feedback($data)
+    {
+        return FeedbackModel::addOne($data);
+    }
 }
