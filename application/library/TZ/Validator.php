@@ -1,11 +1,5 @@
 <?php
 
-/**
- * CheKK
- *
- * @author Fermi <wanghaiyu@che001.com>
- * @final 2017-07-18
- */
 class TZ_Validator
 {
 
