@@ -8,5 +8,6 @@ class IndexController extends Yaf_Controller_Abstract
     public function indexAction()
     {
         echo 'Hello World';
+        var_dump(new redis());
     }
 }
