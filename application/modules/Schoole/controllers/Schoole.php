@@ -16,7 +16,12 @@ class SchooleController extends Yaf_Controller_Abstract
                 TZ_Response::error(10001, '参数有误');
             }
             $get_data = SchooleModel::getList('*', ['name[~]' => $name]);
-            TZ_Response::success('查询成功', $get_data);
+
+            exit(json_encode([
+                'code' => 10000,
+                'msg' => '查询成功',
+                'data' => $get_data
+            ]));
         }
         TZ_Response::error(10001, '请求类型错误');
     }
