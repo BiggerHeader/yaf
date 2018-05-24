@@ -16,10 +16,12 @@ class CommentController extends Yaf_Controller_Abstract
         if ($this->getRequest()->isPost()) {
             // 获取请求体数据
             $body = getRequestBody();
+
             // 参数必传校验
             TZ_Validator::checkField($body, 'content,user_id,product_id', '&&', false);
             $body['create_time'] = date('Y-m-d H:i:s');
             $code = TZ_Loader::service('Comment', 'Comment')->insert($body);
+
             TZ_Response::success('评论成功！');
         }
         TZ_Response::error(10001, '请求类型错误');
@@ -32,12 +34,13 @@ class CommentController extends Yaf_Controller_Abstract
             $page = $this->getRequest()->getQuery('page');
             $pagesize = $this->getRequest()->getQuery('pageSize');
             $limit = getPageLimit(['page' => $page, 'pageSize' => $pagesize]);
-            if (empty($product_id)) {
-                TZ_Response::error(10001, '参数有误！');
+            $where=[];
+            if (!empty($product_id)) {
+                $where = [
+                    'product_id' => $product_id,
+                ];
             }
-            $where = [
-                'product_id' => $product_id,
-            ];
+
             $joins = ["[>]users" => ['user_id' => 'id']];
             $joins['[>]products'] = ['product_id' => 'id'];
 
@@ -52,7 +55,7 @@ class CommentController extends Yaf_Controller_Abstract
                 'products.uuid',
                 'products.id',
             ], $where);
-
+             //var_dump($data);exit();
             header("Content-type:application/json;charset=utf-8");
             exit(json_encode([
                 'code' => 10000,

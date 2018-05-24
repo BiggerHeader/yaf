@@ -68,4 +68,19 @@ class OrderController extends Yaf_Controller_Abstract
         }
         TZ_Response::error(10001, '请求类型错误');
     }
+
+    /*
+     * 确认收货
+     * */
+    public function confireAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $body = getRequestBody();
+            $orderid = $body['orderid'];
+
+            TZ_Loader::service('Order', 'Order')->update(['status' => 2], ['id' => $orderid]);
+            TZ_Response::success('确认收货成功');
+        }
+        TZ_Response::error(10001, '请求类型错误');
+    }
 }
